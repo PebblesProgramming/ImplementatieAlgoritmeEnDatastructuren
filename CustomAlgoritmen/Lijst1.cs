@@ -30,18 +30,18 @@ namespace CustomAlgoritmen
             data[_count++] = element;
         }
 
-        public T find(T input, T element)
-        {
+        //public T find(T input, T element)
+        //{
             
-            for(int i = 0; i < _count; i++)
-            {
-                if(input === element)
-                {
-                    return data[i];
-                }
-            }
-            return Console.WriteLine(result);
-        }
+        //    for(int i = 0; i < _count; i++)
+        //    {
+        //        if(input === element)
+        //        {
+        //            return data[i];
+        //        }
+        //    }
+        //    return Console.WriteLine(result);
+        //}
 
         private void resize()
         {
@@ -68,7 +68,5 @@ namespace CustomAlgoritmen
         {
             return _count;
         }
-
-
     }
 }
