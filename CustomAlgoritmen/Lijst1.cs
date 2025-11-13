@@ -21,21 +21,21 @@ namespace CustomAlgoritmen
         {
             this.data = new T[_defaultSize];
         }
-        public void add(T element)
+        public void Add(T element)
         {
             if(_count == _defaultSize)
             {
-                resize();
+                Resize();
             }
             data[_count++] = element;
         }
 
         //public T find(T input, T element)
         //{
-            
-        //    for(int i = 0; i < _count; i++)
+
+        //    for (int i = 0; i < _count; i++)
         //    {
-        //        if(input === element)
+        //        if (input === element)
         //        {
         //            return data[i];
         //        }
@@ -43,7 +43,7 @@ namespace CustomAlgoritmen
         //    return Console.WriteLine(result);
         //}
 
-        private void resize()
+        private void Resize()
         {
             // make a new array that replaces the current one
             T[] temp = new T[_defaultSize * 2];
@@ -54,17 +54,19 @@ namespace CustomAlgoritmen
             data = temp; 
         }
 
-        public T get(int index)
+       public T this[int index] // this is a indexer
         {
-            return data[index];
+            get
+            {
+                return data[index];
+            }
+            set
+            {
+                data[index] = value;
+            }
         }
 
-        public T set(int index)
-        {
-            return data[index];
-        }
-
-        public int size()
+        public int Size()
         {
             return _count;
         }

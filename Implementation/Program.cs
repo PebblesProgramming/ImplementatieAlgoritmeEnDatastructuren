@@ -8,14 +8,27 @@ namespace Implementation
     {
         static void Main(string[] args)
         {
-            var test = new Lijst1<int>();
-            test.add(1);
-            test.add(2);
-            test.add(10);
+            var normalList = new List<int>();
+            normalList.Add(10);
+            normalList.Add(20);
+            normalList.Add(30);
 
-            for (int i = 0; i < test.size(); i++)
+            Console.WriteLine($"found: {normalList.Find(x => x == 10)}");
+            Console.WriteLine($"found: {normalList.Find(x => x == 11)}");
+
+            for(int i = 0; i < normalList.Count(); i++)
             {
-                Console.WriteLine(test.get(i));
+                Console.WriteLine(normalList[i]);
+            }
+                
+            var test = new Lijst1<int>();
+            test.Add(1);
+            test.Add(2);
+            test.Add(10);
+
+            for (int i = 0; i < test.Size(); i++)
+            {
+                Console.WriteLine(test[i]);
             }
 
         }
