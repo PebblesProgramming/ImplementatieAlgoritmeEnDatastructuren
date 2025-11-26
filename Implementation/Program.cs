@@ -21,7 +21,7 @@ namespace Implementation
                 Console.WriteLine(normalList[i]);
             }
                 
-            var test = new Lijst1<int>();
+            var test = new CustomList<int>();
             test.Add(1);
             test.Add(2);
             test.Add(10);
@@ -31,6 +31,8 @@ namespace Implementation
                 Console.WriteLine(test[i]);
             }
 
+
+            var test2 = new CustomLinkedList<int>();
         }
 
     }
