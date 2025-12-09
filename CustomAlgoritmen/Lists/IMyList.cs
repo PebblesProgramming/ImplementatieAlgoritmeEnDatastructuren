@@ -14,5 +14,6 @@ namespace CustomAlgoritmen.Lists
         //T this[int index] { get; set; } // linkedlist does not need random access
         void Set(int index, T element);
         int Count { get; }
+        bool isEmpty();
     }
 }

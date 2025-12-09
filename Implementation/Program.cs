@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CustomAlgoritmen;
+using CustomAlgoritmen.Lists;
 
 namespace Implementation
 {
@@ -26,7 +27,8 @@ namespace Implementation
             test.Add(2);
             test.Add(10);
 
-            for (int i = 0; i < test.Size(); i++)
+
+            for (int i = 0; i < test.Count; i++)
             {
                 Console.WriteLine(test[i]);
             }

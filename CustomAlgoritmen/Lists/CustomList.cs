@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,10 +20,10 @@ namespace CustomAlgoritmen.Lists
         // Moet ik comparables toevoegen aan mijn generics? of heeft C# dat ingebouwd? Hebben we nodig voor sorting
         public CustomList()
         {
-            data = new T[_defaultSize];
+            this.data = new T[_defaultSize];
         }
 
-        public int Count => throw new NotImplementedException();
+        public int Count => _count;
 
         public void Add(T element)
         {
@@ -34,6 +35,12 @@ namespace CustomAlgoritmen.Lists
             throw new NotImplementedException();
         }
 
+        public T this[int i]
+        {
+            get => data[i];
+            set => data[i] = value;
+        }
+
         public void RemoveAt(int index)
         {
             throw new NotImplementedException();
@@ -42,6 +49,15 @@ namespace CustomAlgoritmen.Lists
         public void Set(int index, T element)
         {
             throw new NotImplementedException();
+        }
+
+        public bool isEmpty()
+        {
+            if (_count == 0) return true;
+            else
+            {
+                return false;
+            }
         }
     }
 }
