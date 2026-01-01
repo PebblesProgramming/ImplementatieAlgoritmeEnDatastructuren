@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using CustomAlgoritmen;
+﻿using CustomAlgoritmen;
 using CustomAlgoritmen.Lists;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Implementation
 {
@@ -9,32 +10,25 @@ namespace Implementation
     {
         static void Main(string[] args)
         {
-            var normalList = new List<int>();
-            normalList.Add(10);
-            normalList.Add(20);
-            normalList.Add(30);
+            Console.WriteLine("=== ADP Algoritmen Performance Demo ===\n");
 
-            Console.WriteLine($"found: {normalList.Find(x => x == 10)}");
-            Console.WriteLine($"found: {normalList.Find(x => x == 11)}");
+            int n = 50000;
 
-            for(int i = 0; i < normalList.Count(); i++)
-            {
-                Console.WriteLine(normalList[i]);
-            }
-                
-            var test = new CustomList<int>();
-            test.Add(1);
-            test.Add(2);
-            test.Add(10);
+            // Demo DynamicArray
+            var da = new DynamicArray<int>();
+            var sw = Stopwatch.StartNew();
+            for (int i = 0; i < n; i++) da.Insert(0, i);
+            sw.Stop();
+            Console.WriteLine($"DynamicArray Insert(0) x {n}: {sw.ElapsedMilliseconds}ms");
 
+            // Demo LinkedList
+            var ll = new SinglyLinkedList<int>();
+            sw.Restart();
+            for (int i = 0; i < n; i++) ll.AddFirst(i);
+            sw.Stop();
+            Console.WriteLine($"LinkedList AddFirst x {n}: {sw.ElapsedMilliseconds}ms");
 
-            for (int i = 0; i < test.Count; i++)
-            {
-                Console.WriteLine(test[i]);
-            }
-
-
-            var test2 = new CustomLinkedList<int>();
+            Console.WriteLine("\nDemo klaar. Vergeet niet de Unit Tests te draaien via de Test Explorer!");
         }
 
     }
