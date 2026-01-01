@@ -27,8 +27,6 @@ namespace Implementation
             for (int i = 0; i < n; i++) ll.AddFirst(i);
             sw.Stop();
             Console.WriteLine($"LinkedList AddFirst x {n}: {sw.ElapsedMilliseconds}ms");
-
-            Console.WriteLine("\nDemo klaar. Vergeet niet de Unit Tests te draaien via de Test Explorer!");
         }
 
     }
