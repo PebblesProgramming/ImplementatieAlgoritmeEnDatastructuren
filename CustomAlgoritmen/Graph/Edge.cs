@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CustomAlgoritmen.Graph
 {
-    internal class Edge
+    public class Edge
     {
+        public Node Target { get; set; }
+        public double Weight { get; set; }
     }
 }
