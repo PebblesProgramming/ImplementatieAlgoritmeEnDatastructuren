@@ -32,13 +32,13 @@ namespace CustomAlgoritmen.Lists
             }
         }
 
-        public void Add(T item) // O(1) amortized
+        public void Add(T item) 
         {
             if (_count == _items.Length) Resize();
             _items[_count++] = item;
         }
 
-        public void Insert(int index, T item) // O(n) worst case
+        public void Insert(int index, T item) 
         {
             if (index < 0 || index > _count) throw new IndexOutOfRangeException();
             if (_count == _items.Length) Resize();
@@ -50,7 +50,7 @@ namespace CustomAlgoritmen.Lists
             _count++;
         }
 
-        public void RemoveAt(int index) // O(n)
+        public void RemoveAt(int index) 
         {
             if (index < 0 || index >= _count) throw new IndexOutOfRangeException();
             for (int i = index; i < _count - 1; i++)

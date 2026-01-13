@@ -9,8 +9,7 @@ using System.Diagnostics;
 
 namespace Implementation
 {
-
-        class Program
+    class Program
         {
             static void Main(string[] args)
             {
@@ -33,17 +32,15 @@ namespace Implementation
                 Console.WriteLine("--- 1. LIJSTEN & PERFORMANCE ---");
                 int n = 20000;
 
-                // DynamicArray
                 var da = new DynamicArray<int>();
                 var sw = Stopwatch.StartNew();
-                for (int i = 0; i < n; i++) da.Insert(0, i); // O(n) per insert
+                for (int i = 0; i < n; i++) da.Insert(0, i); 
                 sw.Stop();
                 Console.WriteLine($"DynamicArray: Insert(0) {n}x duurde: {sw.ElapsedMilliseconds}ms (O(n^2))");
 
-                // SinglyLinkedList
                 var ll = new SinglyLinkedList<int>();
                 sw.Restart();
-                for (int i = 0; i < n; i++) ll.AddFirst(i); // O(1) per insert
+                for (int i = 0; i < n; i++) ll.AddFirst(i); 
                 sw.Stop();
                 Console.WriteLine($"LinkedList: AddFirst {n}x duurde: {sw.ElapsedMilliseconds}ms (O(n))\n");
             }

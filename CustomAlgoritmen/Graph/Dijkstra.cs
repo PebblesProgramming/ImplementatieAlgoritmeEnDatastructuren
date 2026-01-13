@@ -1,37 +1,55 @@
-﻿using CustomAlgoritmen.PriorityQueue;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CustomAlgoritmen.PriorityQueue;
 
 namespace CustomAlgoritmen.Graph
 {
     public class Dijkstra
     {
-        public void Calculate(Graph graph, Node startNode)
+        public void Calculate(Graph graph, Node start)
         {
-            // Reset alle afstanden in de graaf naar 'oneindig'
+            if (graph == null) throw new ArgumentNullException(nameof(graph));
+            if (start == null) throw new ArgumentNullException(nameof(start));
+
+            // Reset
             foreach (var node in graph.AllNodes)
             {
                 node.Distance = double.MaxValue;
+                node.Previous = null;
             }
 
-            startNode.Distance = 0;
+            start.Distance = 0;
+
             var pq = new PriorityQueue<Node>();
-            pq.Enqueue(startNode);
+            pq.Enqueue(start);
+
+            var visited = new HashSet<Node>();
 
             while (pq.Count > 0)
             {
                 var current = pq.Dequeue();
 
+                // Als we hem al definitief hebben gehad: skip
+                if (visited.Contains(current))
+                    continue;
+
+                visited.Add(current);
+
                 foreach (var edge in current.Neighbors)
                 {
+                    if (edge.Weight < 0)
+                        throw new InvalidOperationException("Dijkstra vereist niet-negatieve gewichten.");
+
+                    var neighbor = edge.Target;
                     double newDist = current.Distance + edge.Weight;
-                    if (newDist < edge.Target.Distance)
+
+                    if (newDist < neighbor.Distance)
                     {
-                        edge.Target.Distance = newDist;
-                        pq.Enqueue(edge.Target);
+                        neighbor.Distance = newDist;
+                        neighbor.Previous = current;
+
+                        // Geen decrease-key -> opnieuw in queue stoppen
+                        pq.Enqueue(neighbor);
                     }
                 }
             }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomAlgoritmen.Graph
 {
@@ -10,10 +7,19 @@ namespace CustomAlgoritmen.Graph
     {
         public string Name { get; set; }
         public List<Edge> Neighbors { get; set; } = new List<Edge>();
+
         public double Distance { get; set; } = double.MaxValue;
+        public Node Previous { get; set; } = null; 
 
-        public Node(string name) => Name = name;
+        public Node(string name)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+        }
 
-        public int CompareTo(Node other) => Distance.CompareTo(other.Distance);
+        public int CompareTo(Node other)
+        {
+            if (other == null) return 1;
+            return Distance.CompareTo(other.Distance);
+        }
     }
 }

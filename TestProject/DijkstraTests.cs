@@ -1,9 +1,5 @@
 ﻿using CustomAlgoritmen.Graph;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xunit;
 
 namespace TestProject
 {
@@ -12,29 +8,44 @@ namespace TestProject
         [Fact]
         public void Dijkstra_ShouldFindShortestPath()
         {
-            // 1. Setup Nodes
             var nodeA = new Node("A");
             var nodeB = new Node("B");
             var nodeC = new Node("C");
             var nodeD = new Node("D");
 
-            // 2. Setup Edges (Gewichten)
-            // Route A -> B -> D (Totaal gewicht: 10 + 10 = 20)
-            nodeA.Neighbors.Add(new Edge { Target = nodeB, Weight = 10 });
-            nodeB.Neighbors.Add(new Edge { Target = nodeD, Weight = 10 });
+            var graph = new Graph();
+            graph.AddNode(nodeA);
+            graph.AddNode(nodeB);
+            graph.AddNode(nodeC);
+            graph.AddNode(nodeD);
 
-            // Route A -> C -> D (Totaal gewicht: 2 + 3 = 5)
-            nodeA.Neighbors.Add(new Edge { Target = nodeC, Weight = 2 });
-            nodeC.Neighbors.Add(new Edge { Target = nodeD, Weight = 3 });
+            graph.AddEdge(nodeA, nodeB, 10);
+            graph.AddEdge(nodeB, nodeD, 10);
 
-            // 3. Run Algorithm
+            graph.AddEdge(nodeA, nodeC, 2);
+            graph.AddEdge(nodeC, nodeD, 3);
+
             var solver = new Dijkstra();
-            solver.Calculate(nodeA);
+            solver.Calculate(graph, nodeA);
 
-            // 4. Assert
-            // De afstand naar D moet 5 zijn (via C), niet 20 (via B)
-            Assert.Equal(5, nodeD.Distance);
             Assert.Equal(0, nodeA.Distance);
+            Assert.Equal(10, nodeB.Distance);
+            Assert.Equal(2, nodeC.Distance);
+            Assert.Equal(5, nodeD.Distance);
+        }
+
+        [Fact]
+        public void Dijkstra_ShouldThrow_OnNegativeWeight()
+        {
+            var a = new Node("A");
+            var b = new Node("B");
+
+            var graph = new Graph();
+            graph.AddNode(a);
+            graph.AddNode(b);
+
+            // Negatieve edge is niet toegestaan voor Dijkstra
+            Assert.Throws<ArgumentOutOfRangeException>(() => graph.AddEdge(a, b, -1));
         }
     }
 }

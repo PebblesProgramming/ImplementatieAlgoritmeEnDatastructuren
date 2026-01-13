@@ -12,3 +12,4 @@ namespace CustomAlgoritmen.Graph
         public double Weight { get; set; }
     }
 }
+

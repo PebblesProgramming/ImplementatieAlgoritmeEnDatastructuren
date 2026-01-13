@@ -10,6 +10,9 @@ namespace CustomAlgoritmen.Searching
     {
         public static int Search(T[] array, T target)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
             int low = 0;
             int high = array.Length - 1;
 

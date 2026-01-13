@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomAlgoritmen.Lists;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace CustomAlgoritmen.PriorityQueue
 
         public int Count => _data.Count;
 
-        public void Enqueue(T item) // O(log n)
+        public void Enqueue(T item) 
         {
             _data.Add(item);
             int childIndex = _data.Count - 1;
@@ -25,8 +26,18 @@ namespace CustomAlgoritmen.PriorityQueue
             }
         }
 
-        public T Dequeue() // O(log n)
+        public T Peek() 
         {
+            if (_data.Count == 0)
+                throw new InvalidOperationException("PriorityQueue is empty");
+            return _data[0];
+        }
+
+        public T Dequeue() 
+        {
+            if (_data.Count == 0)
+                throw new InvalidOperationException("PriorityQueue is empty");
+
             int lastIndex = _data.Count - 1;
             T frontItem = _data[0];
             _data[0] = _data[lastIndex];
@@ -38,17 +49,21 @@ namespace CustomAlgoritmen.PriorityQueue
             {
                 int leftChildIndex = parentIndex * 2 + 1;
                 if (leftChildIndex > lastIndex) break;
+
                 int rightChildIndex = leftChildIndex + 1;
                 int targetChildIndex = leftChildIndex;
 
-                if (rightChildIndex <= lastIndex && _data[rightChildIndex].CompareTo(_data[leftChildIndex]) < 0)
+                if (rightChildIndex <= lastIndex &&
+                    _data[rightChildIndex].CompareTo(_data[leftChildIndex]) < 0)
                     targetChildIndex = rightChildIndex;
 
-                if (_data[parentIndex].CompareTo(_data[targetChildIndex]) <= 0) break;
+                if (_data[parentIndex].CompareTo(_data[targetChildIndex]) <= 0)
+                    break;
 
                 Swap(parentIndex, targetChildIndex);
                 parentIndex = targetChildIndex;
             }
+
             return frontItem;
         }
 
@@ -59,4 +74,5 @@ namespace CustomAlgoritmen.PriorityQueue
             _data[b] = tmp;
         }
     }
+
 }

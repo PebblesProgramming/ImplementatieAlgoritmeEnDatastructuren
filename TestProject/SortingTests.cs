@@ -1,10 +1,8 @@
 ﻿using CustomAlgoritmen.Sorting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace TestProject
@@ -31,23 +29,80 @@ namespace TestProject
         }
 
         [Fact]
+        public void Sort_NullOrSmall_ShouldNotCrash()
+        {
+            int[] a = null;
+            MergeSorter<int>.Sort(a);
+            InsertionSorter<int>.Sort(a);
+
+            int[] b = Array.Empty<int>();
+            MergeSorter<int>.Sort(b);
+            InsertionSorter<int>.Sort(b);
+            Assert.Empty(b);
+
+            int[] c = { 42 };
+            MergeSorter<int>.Sort(c);
+            InsertionSorter<int>.Sort(c);
+            Assert.Equal(new[] { 42 }, c);
+        }
+
+        [Fact]
+        public void Sort_AlreadySorted_ShouldStaySorted()
+        {
+            int[] data = { 1, 2, 3, 4, 5 };
+            var m = (int[])data.Clone();
+            var i = (int[])data.Clone();
+
+            MergeSorter<int>.Sort(m);
+            InsertionSorter<int>.Sort(i);
+
+            Assert.Equal(data, m);
+            Assert.Equal(data, i);
+        }
+
+        [Fact]
+        public void Sort_ReverseSorted_ShouldSortCorrectly()
+        {
+            int[] data = { 5, 4, 3, 2, 1 };
+            var m = (int[])data.Clone();
+            var i = (int[])data.Clone();
+
+            MergeSorter<int>.Sort(m);
+            InsertionSorter<int>.Sort(i);
+
+            Assert.True(IsSorted(m));
+            Assert.True(IsSorted(i));
+        }
+
+        [Fact]
+        public void Sort_WithDuplicates_ShouldSortCorrectly()
+        {
+            int[] data = { 3, 1, 2, 3, 1, 2 };
+            var m = (int[])data.Clone();
+            var i = (int[])data.Clone();
+
+            MergeSorter<int>.Sort(m);
+            InsertionSorter<int>.Sort(i);
+
+            Assert.True(IsSorted(m));
+            Assert.True(IsSorted(i));
+        }
+
+        [Fact]
         public void Compare_Sorting_Performance()
         {
-            // Gebruik een kleinere N voor Insertion Sort omdat O(n^2) traag is
-            int n = 20000;
-            Random rnd = new Random();
-            int[] original = Enumerable.Range(0, n).Select(_ => rnd.Next(0, n)).ToArray();
+            int n = 20000; // insertion sort is O(n^2), so keep n reasonable
+            var rnd = new Random(123); // fixed seed for repeatability
 
+            int[] original = Enumerable.Range(0, n).Select(_ => rnd.Next(0, n)).ToArray();
             int[] mergeData = (int[])original.Clone();
             int[] insertionData = (int[])original.Clone();
 
-            // Measure Merge Sort
             var sw = Stopwatch.StartNew();
             MergeSorter<int>.Sort(mergeData);
             sw.Stop();
             long mergeTime = sw.ElapsedMilliseconds;
 
-            // Measure Insertion Sort
             sw.Restart();
             InsertionSorter<int>.Sort(insertionData);
             sw.Stop();
@@ -57,17 +112,14 @@ namespace TestProject
             _output.WriteLine($"Merge Sort: {mergeTime}ms");
             _output.WriteLine($"Insertion Sort: {insertionTime}ms");
 
-            // Check of ze echt gesorteerd zijn
             Assert.True(IsSorted(mergeData));
             Assert.True(IsSorted(insertionData));
         }
 
-        private bool IsSorted<T>(T[] array) where T : IComparable<T>
+        private static bool IsSorted<T>(T[] array) where T : IComparable<T>
         {
             for (int i = 0; i < array.Length - 1; i++)
-            {
                 if (array[i].CompareTo(array[i + 1]) > 0) return false;
-            }
             return true;
         }
     }
