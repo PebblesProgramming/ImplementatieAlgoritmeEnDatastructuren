@@ -20,8 +20,9 @@ namespace CustomAlgoritmen.Graph
 
             start.Distance = 0;
 
-            var pq = new PriorityQueue<Node>();
-            pq.Enqueue(start);
+            // PriorityQueue met Node als element en double (Distance) als prioriteit
+            var pq = new PriorityQueue<Node, double>();
+            pq.Enqueue(start, start.Distance);
 
             var visited = new HashSet<Node>();
 
@@ -48,8 +49,8 @@ namespace CustomAlgoritmen.Graph
                         neighbor.Distance = newDist;
                         neighbor.Previous = current;
 
-                        // Geen decrease-key -> opnieuw in queue stoppen
-                        pq.Enqueue(neighbor);
+                        // Geen decrease-key -> opnieuw in queue stoppen met nieuwe prioriteit
+                        pq.Enqueue(neighbor, newDist);
                     }
                 }
             }
