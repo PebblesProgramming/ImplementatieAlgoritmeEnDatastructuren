@@ -19,7 +19,8 @@ namespace CustomAlgoritmen.Lists
         private int _count;
         public int Count => _count;
 
-        public void AddFirst(T item) // O(1)
+        // O(1) - alleen head pointer aanpassen, geen iteratie nodig
+        public void AddFirst(T item)
         {
             var newNode = new Node<T>(item);
             newNode.Next = _head;
@@ -27,7 +28,9 @@ namespace CustomAlgoritmen.Lists
             _count++;
         }
 
-        public void AddLast(T item) // O(n) zonder tail pointer
+        // O(n) - moet door hele lijst itereren om einde te vinden
+        // Optimalisatie mogelijk: tail pointer bijhouden → O(1)
+        public void AddLast(T item)
         {
             var newNode = new Node<T>(item);
             if (_head == null) { _head = newNode; }
@@ -40,7 +43,8 @@ namespace CustomAlgoritmen.Lists
             _count++;
         }
 
-        public bool Remove(T item) // O(n)
+        // O(n) - moet element zoeken door te itereren vanaf head
+        public bool Remove(T item) 
         {
             if (_head == null) return false;
             if (_head.Value.Equals(item))

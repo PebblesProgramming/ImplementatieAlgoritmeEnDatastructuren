@@ -18,6 +18,7 @@ namespace CustomAlgoritmen.Lists
             _items = new T[capacity];
         }
 
+        // O(1) - directe geheugenberekening: startadres + (index × elementgrootte)
         public T this[int index]
         {
             get
@@ -32,13 +33,16 @@ namespace CustomAlgoritmen.Lists
             }
         }
 
-        public void Add(T item) 
+        // O(1) amortized - direct plaatsen op _items[_count]
+        // Worst case O(n) bij resize: alle elementen kopiëren naar nieuwe array
+        public void Add(T item)
         {
             if (_count == _items.Length) Resize();
             _items[_count++] = item;
         }
 
-        public void Insert(int index, T item) 
+        // O(n) - alle elementen na index moeten opschuiven
+        public void Insert(int index, T item)
         {
             if (index < 0 || index > _count) throw new IndexOutOfRangeException();
             if (_count == _items.Length) Resize();
@@ -50,7 +54,8 @@ namespace CustomAlgoritmen.Lists
             _count++;
         }
 
-        public void RemoveAt(int index) 
+        // O(n) - alle elementen na index moeten opschuiven
+        public void RemoveAt(int index)
         {
             if (index < 0 || index >= _count) throw new IndexOutOfRangeException();
             for (int i = index; i < _count - 1; i++)
@@ -59,6 +64,7 @@ namespace CustomAlgoritmen.Lists
             _items[_count] = default;
         }
 
+        // O(n) - alle elementen kopiëren naar nieuwe array van dubbele grootte
         private void Resize()
         {
             T[] newArray = new T[_items.Length * 2];
